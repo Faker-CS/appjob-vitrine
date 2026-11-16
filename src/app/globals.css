@@ -1,26 +1,253 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * AppJob design tokens — single source of truth.
+ * Values come from the Figma "Fondations" page and the "Composants" library.
+ * Tailwind utilities (bg-primary, text-h2, rounded-lg, shadow-blue, …) are
+ * generated from this block; components never hardcode these values.
+ */
+@theme {
+  /* ---- Colour · brand ---------------------------------------------- */
+  --color-primary: #385eff; /* brand/primary */
+  --color-primary-strong: #2644d6; /* text on primary-tint */
+  --color-primary-200: #c7d2ff; /* soft text on primary, active borders */
+  --color-primary-tint: #e6ebff; /* brand/primary-tint */
+  --color-ink: #0b1033; /* brand/ink = text/primary */
+  --color-ink-700: #1b2250; /* brand/ink-700 */
+  --color-ink-tint: #e3e6f2; /* pill "Encre" */
+  --color-mandarine: #ff7a3d; /* accent/mandarine */
+  --color-mandarine-strong: #b8451a; /* text on mandarine-tint */
+  --color-mandarine-tint: #ffe9dd; /* accent/mandarine-tint */
+
+  /* ---- Colour · feedback ------------------------------------------- */
+  --color-success: #18b48a;
+  --color-success-strong: #0f7a5d;
+  --color-success-tint: #ddf6ee;
+  --color-error: #e0405c;
+  --color-error-tint: #fbe1e6;
+
+  /* ---- Colour · surfaces, borders, text ---------------------------- */
+  --color-page: #f7f8fc; /* bg/page */
+  --color-soft: #f2f5ff; /* bg/soft */
+  --color-surface: #ffffff; /* bg/surface */
+  --color-surface-2: #eef1f9; /* bg/surface-2 */
+  --color-line: #dde1ee; /* border/default */
+  --color-line-strong: #b9c0d6; /* border/strong */
+  --color-fg: #0b1033; /* text/primary */
+  --color-fg-secondary: #4a5172; /* text/secondary */
+  --color-fg-tertiary: #7c83a3; /* text/tertiary */
+
+  /* ---- Typography --------------------------------------------------- */
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  /* Display · Sora ExtraBold 72/105 */
+  --text-display: 4.5rem;
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 800;
+  /* H1 · Sora Bold 64/108 */
+  --text-h1: 4rem;
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 700;
+  /* H1 mobile · Sora Bold 40/108 */
+  --text-h1-sm: 2.5rem;
+  --text-h1-sm--line-height: 1.08;
+  --text-h1-sm--letter-spacing: -0.02em;
+  --text-h1-sm--font-weight: 700;
+  /* H2 · Sora Bold 44/110 */
+  --text-h2: 2.75rem;
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--font-weight: 700;
+  /* H2 mobile · Sora Bold 32/110 */
+  --text-h2-sm: 2rem;
+  --text-h2-sm--line-height: 1.1;
+  --text-h2-sm--letter-spacing: -0.02em;
+  --text-h2-sm--font-weight: 700;
+  /* Card title large · Sora Bold 36/120 */
+  --text-h3-lg: 2.25rem;
+  --text-h3-lg--line-height: 1.2;
+  --text-h3-lg--letter-spacing: -0.015em;
+  --text-h3-lg--font-weight: 700;
+  /* H3 · Sora Bold 28/120 */
+  --text-h3: 1.75rem;
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h3--font-weight: 700;
+  /* H4 · Sora Bold 22/125 */
+  --text-h4: 1.375rem;
+  --text-h4--line-height: 1.25;
+  --text-h4--letter-spacing: -0.01em;
+  --text-h4--font-weight: 700;
+  /* H5 · Sora Bold 20/125 */
+  --text-h5: 1.25rem;
+  --text-h5--line-height: 1.25;
+  --text-h5--letter-spacing: -0.01em;
+  --text-h5--font-weight: 700;
+  /* H6 · Sora Bold 19/125 */
+  --text-h6: 1.1875rem;
+  --text-h6--line-height: 1.25;
+  --text-h6--letter-spacing: -0.01em;
+  --text-h6--font-weight: 700;
+  /* Title small · Sora Bold 16/125 (banners) */
+  --text-title-sm: 1rem;
+  --text-title-sm--line-height: 1.25;
+  --text-title-sm--letter-spacing: -0.01em;
+  --text-title-sm--font-weight: 700;
+  /* Question · Sora SemiBold 17/125 */
+  --text-question: 1.0625rem;
+  --text-question--line-height: 1.25;
+  --text-question--letter-spacing: -0.01em;
+  --text-question--font-weight: 600;
+  /* Stat · Sora Bold 44/100 */
+  --text-stat: 2.75rem;
+  --text-stat--line-height: 1;
+  --text-stat--letter-spacing: -0.03em;
+  --text-stat--font-weight: 700;
+  /* Quote · Sora SemiBold 32/130 (à propos) */
+  --text-quote: 2rem;
+  --text-quote--line-height: 1.3;
+  --text-quote--letter-spacing: -0.02em;
+  --text-quote--font-weight: 600;
+  /* Lead · Manrope Regular 20/155 */
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.55;
+  /* Body · Manrope Regular 17/160 */
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  /* Field · Manrope Regular 16/160 */
+  --text-field: 1rem;
+  --text-field--line-height: 1.6;
+  /* Small · Manrope Regular 15/160 */
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.6;
+  /* Note · Manrope Regular 14/160 (table of contents, fine print) */
+  --text-note: 0.875rem;
+  --text-note--line-height: 1.6;
+  /* Caption · Manrope Regular 13/150 */
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.5;
+  /* Micro · Manrope Medium 11/110 +2 % */
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.1;
+  --text-micro--letter-spacing: 0.02em;
+  /* Eyebrow · Sora Bold 13/120 +14 % */
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.14em;
+  --text-eyebrow--font-weight: 700;
+  /* Overline · Sora Bold 14/120 +10 % (footer column titles) */
+  --text-overline: 0.875rem;
+  --text-overline--line-height: 1.2;
+  --text-overline--letter-spacing: 0.1em;
+  --text-overline--font-weight: 700;
+  /* Table head · Sora Bold 13/150 +6 % */
+  --text-table-head: 0.8125rem;
+  --text-table-head--line-height: 1.5;
+  --text-table-head--letter-spacing: 0.06em;
+  --text-table-head--font-weight: 700;
+  /* Labels · Sora SemiBold, single line */
+  --text-label-lg: 1.0625rem; /* 17 */
+  --text-label-lg--line-height: 1.1;
+  --text-label-lg--font-weight: 600;
+  --text-label: 1rem; /* 16 */
+  --text-label--line-height: 1;
+  --text-label--font-weight: 600;
+  --text-label-md: 0.9375rem; /* 15 */
+  --text-label-md--line-height: 1;
+  --text-label-md--font-weight: 600;
+  --text-label-sm: 0.875rem; /* 14 */
+  --text-label-sm--line-height: 1;
+  --text-label-sm--font-weight: 600;
+  --text-label-xs: 0.8125rem; /* 13 */
+  --text-label-xs--line-height: 1;
+  --text-label-xs--font-weight: 600;
+  /* Wordmark · Sora Bold 24/100 −3 % */
+  --text-wordmark: 1.5rem;
+  --text-wordmark--line-height: 1;
+  --text-wordmark--letter-spacing: -0.03em;
+  --text-wordmark--font-weight: 700;
+
+  /* ---- Radii --------------------------------------------------------- */
+  --radius-2xs: 0.5rem; /* 8 · list items, small chips */
+  --radius-xs: 0.75rem; /* 12 · burger */
+  --radius-sm: 0.625rem; /* radius/sm 10 */
+  --radius-control: 0.875rem; /* 14 · inputs, alerts, icon tiles */
+  --radius-md: 1rem; /* radius/md 16 */
+  --radius-lg: 1.5rem; /* radius/lg 24 */
+  --radius-xl: 2rem; /* radius/xl 32 */
+  --radius-phone: 2.75rem; /* 44 · phone shell */
+  --radius-screen: 2.125rem; /* 34 · phone screen */
+
+  /* ---- Shadows ------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px 0 rgb(11 16 51 / 0.06), 0 2px 8px 0 rgb(11 16 51 / 0.04);
+  --shadow-md: 0 8px 24px 0 rgb(11 16 51 / 0.08), 0 2px 6px 0 rgb(11 16 51 / 0.04);
+  --shadow-lg: 0 24px 64px 0 rgb(11 16 51 / 0.14), 0 8px 20px 0 rgb(11 16 51 / 0.06);
+  --shadow-blue: 0 16px 40px 0 rgb(56 94 255 / 0.28);
+  --shadow-focus: 0 0 0 4px #e6ebff;
+  --shadow-focus-error: 0 0 0 4px #fbe1e6;
+
+  /* ---- Layout -------------------------------------------------------- */
+  --container-page: 75rem; /* 1 200 px, 12 columns of 78 with 24 gutters */
+  --breakpoint-desk: 80rem; /* 1 280 px: full desktop composition */
+
+  /* ---- Motion -------------------------------------------------------- */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-page);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-primary-tint);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Page gutters: 16 px on mobile, 32 px on tablet; the 1 200 px container
+   then leaves the 120 px margins of the 1 440 px desktop frames. */
+@utility gutter {
+  padding-inline: 1rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-page);
 }
